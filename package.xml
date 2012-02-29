@@ -1,0 +1,11 @@
+<package>
+  <name>OSProcess</name>
+  <namespace>Smalltalk</namespace>
+
+  <filein>OSProcess/OSProcess.st</filein>
+  <filein>OSProcess/ExternalProcess.st</filein>
+  <filein>OSProcess/ThisOSProcess.st</filein>
+
+  <filein>OSProcess/PostLoad.st</filein>
+
+</package>

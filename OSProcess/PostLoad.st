@@ -1,0 +1,3 @@
+Eval [
+    DLD addLibrary: 'libc'.
+]
