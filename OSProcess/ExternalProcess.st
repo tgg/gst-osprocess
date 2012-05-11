@@ -25,12 +25,12 @@ OSProcess subclass: ExternalOSProcess [
     ]
 ]
 
-Eval [
+"Eval [
 
     | process |
     DLD addLibrary: 'libc'.
     process := ThisOSProcess uniqueInstance forkAndDo: [ 'Hello World' printNl. [ 'true' printNl. true ] whileTrue ].
     process inspect.
     process sigKill.
-]
+]"
 
