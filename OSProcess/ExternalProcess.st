@@ -10,6 +10,12 @@ OSProcess subclass: ExternalOSProcess [
 	    yourself
     ]
 
+    ExternalOSProcess class >> waitpid: pid status: anIntPtr options: anInteger [
+	<category: 'private wait'>
+
+	<cCall: 'waitpid' returning: #long args: #(#long (#ptr #int) #int)>
+    ]
+
     | pid |
 
     pid: anInteger [
@@ -22,6 +28,12 @@ OSProcess subclass: ExternalOSProcess [
 	<category: 'process'>
 
 	^ pid
+    ]
+
+    wait [
+	<category: 'process'>
+
+	self class waitpid: pid status: nil options: 0
     ]
 ]
 

@@ -14,6 +14,27 @@ OSProcess subclass: ThisOSProcess [
 	<cCall: 'daemon' returning: #long args: #(#long #long)>
     ]
 
+    ThisOSProcess class >> exec: command args: args [
+	<category: 'private exec'>
+
+	| argv i |
+	"first arg is command, last is NUL terminator"
+	argv := (CStringType arrayType: args size + 2) gcNew.
+	i := 0.
+	argv at: i put: command.
+	i := 1.
+	args do: [ :arg |
+	    argv at: i put: arg.
+	    i := i + 1. ].
+	^ self execvp: command args: argv
+    ]
+
+    ThisOSProcess class >> execvp: command args: args [
+	<category: 'private exec'>
+
+	<cCall: 'execvp' returning: #int args: #(#string (#ptr #string))>
+    ]
+
     pid [
         <category: 'process'>
 
@@ -48,6 +69,18 @@ OSProcess subclass: ThisOSProcess [
                 aBlock value.
                 ThisOSProcess uniqueInstance ]
             ifFalse: [ ExternalOSProcess pid: childPid ]
+    ]
+
+    forkAndExec: command with: args [
+        <category: 'process'>
+
+        ^ self forkAndDo: [ self class exec: command args: args ]
+    ]
+
+    forkAndExec: command [
+        <category: 'process'>
+
+        ^ self forkAndExec: command with: #()
     ]
 ]
 
